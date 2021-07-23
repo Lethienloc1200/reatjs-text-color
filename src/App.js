@@ -1,25 +1,57 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import ColorPicker from './components/ColorPicker';
+import SizeSetting from './components/SizeSetting';
+import Reset from './components/Reset';
+import Result from './components/Result';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+ 
+  constructor(props){
+    super(props);
+    this.state= {
+      color: 'red',
+      fontSize:12
+    };
+  }
+  onSetColor=(params)=>{
+  this.setState({
+    color:params
+  });
+  }
+  onChangeSize=(value)=>{
+    if(this.state.fontSize + value >=8 && this.state.fontSize + value <= 36){ 
+      this.setState({
+        fontSize: this.state.fontSize + value 
+      });
+    }
+  }
+  onSetting = (value)=>{
+    if(value)
+    {
+      this.setState( {
+        color: 'red',
+        fontSize:12
+      });
+    }
+
+  }
+    render() {
+        return (
+            <div className="container mt-50">
+                <div className="row">            
+                        <ColorPicker color ={this.state.color} NhanMau={this.onSetColor } />   
+                    <div className="col-sm-6 col-md-6 col-lg-6">
+                        <SizeSetting fontSize={this.state.fontSize} 
+                                      onChangeSize= {this.onChangeSize} 
+                        />
+                        <Reset onSetting= {this.onSetting} />
+                    </div>
+                    <Result color ={this.state.color} fontSize ={this.state.fontSize}/>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;
